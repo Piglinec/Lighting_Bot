@@ -1,17 +1,17 @@
-name: Проверка графика
+name: Перевірка графіка
 
 on:
   schedule:
-    - cron: "*/30 * * * *"     # каждые 30 минут (чаще 5 минут GitHub не позволяет)
-  workflow_dispatch:           # ручной запуск: Actions → Проверка графика → Run workflow
+    - cron: "*/30 * * * *"     # кожні 5 хвилин (частіше GitHub не дозволяє)
+  workflow_dispatch:           # ручний запуск: Actions → Перевірка графіка → Run workflow
 
-# не запускать две проверки одновременно (иначе возможны дубли уведомлений)
+# не запускати дві перевірки одночасно (інакше можливі дублікати сповіщень)
 concurrency:
   group: volyn-bot
   cancel-in-progress: false
 
 permissions:
-  contents: write              # чтобы сохранить state.json в ветку state
+  contents: write              # щоб зберігати state.json у гілку state
 
 jobs:
   check:
@@ -27,7 +27,7 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Загрузить состояние из ветки state
+      - name: Завантажити стан із гілки state
         run: |
           if git fetch -q --depth=1 origin state 2>/dev/null; then
             git show origin/state:state.json > state.json || echo '{}' > state.json
@@ -35,13 +35,7 @@ jobs:
             echo '{}' > state.json
           fi
 
-      - name: Диагностика связи с Telegram
-        run: |
-          echo "--- DNS:"; getent ahosts api.telegram.org || echo "DNS не нашёл адрес"
-          curl -4 -sS -m 10 -o /dev/null -w "IPv4: HTTP %{http_code}\n" https://api.telegram.org || echo "IPv4 не работает"
-          curl -6 -sS -m 10 -o /dev/null -w "IPv6: HTTP %{http_code}\n" https://api.telegram.org || echo "IPv6 не работает"
-
-      - name: Проверить график и ответить на команды
+      - name: Перевірити графік і відповісти на команди
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           ADMIN_CHAT_ID: ${{ secrets.ADMIN_CHAT_ID }}
@@ -52,7 +46,7 @@ jobs:
           STATE_FILE: state.json
         run: python bot.py --once
 
-      - name: Сохранить состояние (только если изменилось)
+      - name: Зберегти стан (лише якщо змінився)
         if: always()
         run: |
           [ -s state.json ] || exit 0
@@ -69,7 +63,7 @@ jobs:
           cp /tmp/state.json state.json
           git add state.json
           if git diff --cached --quiet; then
-            echo "состояние не изменилось"
+            echo "стан не змінився"
           else
             git commit -qm "state $(date -u +%FT%TZ)"
             git push -q origin HEAD:state
