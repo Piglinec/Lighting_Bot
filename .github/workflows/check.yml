@@ -35,6 +35,12 @@ jobs:
             echo '{}' > state.json
           fi
 
+      - name: Диагностика связи с Telegram
+        run: |
+          echo "--- DNS:"; getent ahosts api.telegram.org || echo "DNS не нашёл адрес"
+          curl -4 -sS -m 10 -o /dev/null -w "IPv4: HTTP %{http_code}\n" https://api.telegram.org || echo "IPv4 не работает"
+          curl -6 -sS -m 10 -o /dev/null -w "IPv6: HTTP %{http_code}\n" https://api.telegram.org || echo "IPv6 не работает"
+
       - name: Проверить график и ответить на команды
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
