@@ -5,7 +5,7 @@
    "queue": "3.1"
   },
   "792341475": {
-   "remind": 30,
+   "remind": 15,
    "queue": "3.1"
   },
   "697692971": {
@@ -150,7 +150,7 @@
   }
  },
  "reminded": [],
- "offset": 190975492,
+ "offset": 190975493,
  "heartbeat": "2026-W48",
  "commands_version": 4
 }
