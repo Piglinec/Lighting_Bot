@@ -1,7 +1,7 @@
 {
  "chats": {
   "496085653": {
-   "remind": 30,
+   "remind": 40,
    "queue": "3.1"
   },
   "792341475": {
@@ -150,7 +150,7 @@
   }
  },
  "reminded": [],
- "offset": 190975489,
+ "offset": 190975490,
  "heartbeat": "2026-W48",
  "commands_version": 4
 }
