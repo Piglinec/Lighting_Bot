@@ -11,6 +11,10 @@
   "697692971": {
    "remind": 30,
    "queue": "3.1"
+  },
+  "345190533": {
+   "remind": 30,
+   "queue": "2.2"
   }
  },
  "days": {
@@ -150,7 +154,7 @@
   }
  },
  "reminded": [],
- "offset": 190975499,
+ "offset": 190975507,
  "heartbeat": "2026-W48",
  "commands_version": 4
 }
