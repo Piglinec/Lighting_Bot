@@ -237,7 +237,9 @@
    "error": ""
   }
  },
- "reminded": [],
+ "reminded": [
+  "496085653|2026-11-27|480"
+ ],
  "offset": 190975507,
  "heartbeat": "2026-W48",
  "commands_version": 4
